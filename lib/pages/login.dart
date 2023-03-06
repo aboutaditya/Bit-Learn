@@ -1,11 +1,22 @@
+import 'dart:math';
+
 import 'package:bitbybit/colorcode.dart';
 import 'package:bitbybit/pages/home.dart';
 import 'package:bitbybit/pages/signup.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  TextEditingController password = TextEditingController();
+  TextEditingController email = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +80,7 @@ class LoginPage extends StatelessWidget {
                   child: Center(
                     child: Container(
                         width: MediaQuery.of(context).size.width * 0.8,
-                        child: TextField(
+                        child: TextField(controller: email,
                           style: GoogleFonts.lato(
                               color: Colors.black,
                               fontSize: 18,
@@ -110,7 +121,7 @@ class LoginPage extends StatelessWidget {
                   child: Center(
                     child: Container(
                         width: MediaQuery.of(context).size.width * 0.8,
-                        child: TextField(
+                        child: TextField(controller: password,
                           obscureText: true,
                           style: GoogleFonts.lato(
                               color: Colors.black,
@@ -151,8 +162,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomePage()));
+                    login(email.text, password.text, context);
                   },
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.85,
@@ -206,4 +216,20 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
+}
+void login(String emailAddress, String password , context)async {
+  try {
+  final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+    email: emailAddress,
+    password: password
+  );
+  Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => LandingPage()));
+} on FirebaseAuthException catch (e) {
+  if (e.code == 'user-not-found') {
+    print('No user found for that email.');
+  } else if (e.code == 'wrong-password') {
+    print('Wrong password provided for that user.');
+  }
+}
 }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "570406554758",
+    "project_id": "bitlearn-1fc4b",
+    "storage_bucket": "bitlearn-1fc4b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:570406554758:android:a130086a898c92eaf9d507",
+        "android_client_info": {
+          "package_name": "com.example.bitbybit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "570406554758-9316h5lp0hohes144a9q5rbj2s6hp7u9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDin6wUrVRKGMNtMcCH-HYnM-8nBaqqJw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "570406554758-9316h5lp0hohes144a9q5rbj2s6hp7u9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

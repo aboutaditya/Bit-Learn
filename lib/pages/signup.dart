@@ -1,12 +1,24 @@
+import 'package:bitbybit/pages/home.dart';
 import 'package:bitbybit/pages/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../colorcode.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
 
+  @override
+  State<SignUpPage> createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
+  TextEditingController email = TextEditingController();
+  TextEditingController name = TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController passwordconfirm = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +72,7 @@ class SignUpPage extends StatelessWidget {
                     child: Center(
                       child: Container(
                           width: MediaQuery.of(context).size.width * 0.75,
-                          child: TextField(
+                          child: TextField(controller: name,
                             style: GoogleFonts.lato(
                                 color: Colors.black,
                                 fontSize: 18,
@@ -98,6 +110,7 @@ class SignUpPage extends StatelessWidget {
                       child: Container(
                           width: MediaQuery.of(context).size.width * 0.8,
                           child: TextField(
+                            controller: email,
                             style: GoogleFonts.lato(
                                 color: Colors.black,
                                 fontSize: 18,
@@ -139,6 +152,7 @@ class SignUpPage extends StatelessWidget {
                       child: Container(
                           width: MediaQuery.of(context).size.width * 0.8,
                           child: TextField(
+                            controller: password,
                             obscureText: true,
                             style: GoogleFonts.lato(
                                 color: Colors.black,
@@ -181,6 +195,7 @@ class SignUpPage extends StatelessWidget {
                       child: Container(
                           width: MediaQuery.of(context).size.width * 0.8,
                           child: TextField(
+                            controller: passwordconfirm,
                             obscureText: true,
                             style: GoogleFonts.lato(
                                 color: Colors.black,
@@ -202,7 +217,15 @@ class SignUpPage extends StatelessWidget {
                     height: 22,
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      if(password.text==passwordconfirm.text){
+                        signup( email.text
+                        , password.text,name.text, context);
+                      }
+                      else{
+                        print("mismacth");
+                      }
+                    },
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.85,
                       height: 53,
@@ -257,4 +280,22 @@ class SignUpPage extends StatelessWidget {
           )),
     );
   }
+}
+void signup(String emailAddress, String password,String name , context)async{
+  try {
+  final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    email: emailAddress,
+    password: password,
+  );
+  final updatename = await FirebaseAuth.instance.currentUser!.updateDisplayName(name);
+  Navigator.push(context, MaterialPageRoute(builder: (context)=>LandingPage()));
+} on FirebaseAuthException catch (e) {
+  if (e.code == 'weak-password') {
+    print('The password provided is too weak.');
+  } else if (e.code == 'email-already-in-use') {
+    print('The account already exists for that email.');
+  }
+} catch (e) {
+  print(e);
+}
 }
