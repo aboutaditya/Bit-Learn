@@ -8,6 +8,8 @@ import 'package:webview_flutter_android/webview_flutter_android.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 class MyWebView extends StatefulWidget {
+  String link;
+  MyWebView( this.link, {super.key});
   @override
   State<MyWebView> createState() => _MyWebViewState();
 }
@@ -39,7 +41,7 @@ class _MyWebViewState extends State<MyWebView> {
         },
       ))
       ..loadRequest(
-        Uri.parse('https://www.programiz.com/python-programming/online-compiler/?ref=742a9ec4'),
+        Uri.parse(widget.link),
       )
       ..setJavaScriptMode(JavaScriptMode.unrestricted);
     

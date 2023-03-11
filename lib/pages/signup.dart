@@ -288,7 +288,7 @@ void signup(String emailAddress, String password,String name , context)async{
     password: password,
   );
   final updatename = await FirebaseAuth.instance.currentUser!.updateDisplayName(name);
-  Navigator.push(context, MaterialPageRoute(builder: (context)=>LandingPage()));
+  Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
 } on FirebaseAuthException catch (e) {
   if (e.code == 'weak-password') {
     print('The password provided is too weak.');

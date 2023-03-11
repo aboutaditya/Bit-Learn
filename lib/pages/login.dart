@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bitbybit/colorcode.dart';
 import 'package:bitbybit/pages/home.dart';
 import 'package:bitbybit/pages/signup.dart';
@@ -224,7 +222,7 @@ void login(String emailAddress, String password , context)async {
     password: password
   );
   Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => LandingPage()));
+                        MaterialPageRoute(builder: (context) => HomePage()));
 } on FirebaseAuthException catch (e) {
   if (e.code == 'user-not-found') {
     print('No user found for that email.');

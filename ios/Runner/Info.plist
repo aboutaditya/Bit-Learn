@@ -49,5 +49,11 @@
 	<true/>
 	<key>io.flutter.embedded_views_preview</key>
 	<string>YES</string>
+	  <key>NSPhotoLibraryUsageDescription</key>
+  <string>Upload images</string>
+  <key>NSCameraUsageDescription</key>
+  <string>Click image </string>
+  <key>NSMicrophoneUsageDescription</key>
+  <string>Post videos to profile</string>
 </dict>
 </plist>
