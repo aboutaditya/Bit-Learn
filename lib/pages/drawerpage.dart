@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bitbybit/pages/changepassword.dart';
 import 'package:bitbybit/pages/onboard.dart';
 import 'package:bitbybit/pages/profile.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -63,7 +64,7 @@ class MyDrawer extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width / 2,
+                      width: MediaQuery.of(context).size.width / 2.4,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -97,58 +98,65 @@ class MyDrawer extends StatelessWidget {
             padding: const EdgeInsets.all(13.0),
             child: Container(
               child: Column(children: [
-                Container(
-                    width: MediaQuery.of(context).size.width * 0.88,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>PasswordChangePage()));
+                  },
+                  child: Container(
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      child: FittedBox(
+                        child: Row(
+                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Icon(FontAwesomeIcons.userLock),
-                            SizedBox(
-                              width: 13,
-                            ),
-                            Container(
-                              // width: 250,
-                              child: AutoSizeText(
-                                "CHANGE PASSWORD",
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 22,
-                                    color: AppUIColor.lightTextColor),
-                              ),
+                            Row(
+                              children: [
+                                Icon(FontAwesomeIcons.userLock),
+                                SizedBox(
+                                  width: 13,
+                                ),
+                                FittedBox(
+                                  // width: 250,
+                                  child: AutoSizeText(
+                                    "CHANGE PASSWORD",
+                                    maxLines: 1,
+                                    // overflow: TextOverflow.ellipsis,
+                                    style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 22,
+                                        color: AppUIColor.lightTextColor),
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                      ],
-                    )),
-                SizedBox(
-                  height: 31,
+                      )),
                 ),
-                Container(
-                    width: MediaQuery.of(context).size.width * 0.88,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(FontAwesomeIcons.user),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Text(
-                              "ABOUT US",
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 22,
-                                  color: AppUIColor.lightTextColor),
-                            ),
-                          ],
-                        ),
-                      ],
-                    )),
+                // SizedBox(
+                //   height: 31,
+                // ),
+                // Container(
+                //     width: MediaQuery.of(context).size.width * 0.88,
+                //     child: Row(
+                //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //       children: [
+                //         Row(
+                //           children: [
+                //             Icon(FontAwesomeIcons.user),
+                //             SizedBox(
+                //               width: 8,
+                //             ),
+                //             Text(
+                //               "ABOUT US",
+                //               style: GoogleFonts.poppins(
+                //                   fontWeight: FontWeight.w500,
+                //                   fontSize: 22,
+                //                   color: AppUIColor.lightTextColor),
+                //             ),
+                //           ],
+                //         ),
+                //       ],
+                //     )),
                 SizedBox(
                   height: 31,
                 ),

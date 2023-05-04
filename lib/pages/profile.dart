@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:bitbybit/pages/changepassword.dart';
 import 'package:bitbybit/pages/home.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -91,16 +92,20 @@ class _ProfilePageState extends State<ProfilePage> {
                         width: double.infinity,
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
-                          child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(height: 50,),
+                              SizedBox(
+                                height: 50,
+                              ),
                               GestureDetector(
                                 onTap: () {
                                   Navigator.pop(context);
                                 },
                                 child: Icon(
                                   Icons.arrow_back,
-                                  color: AppUIColor.lightbackgroundColor,size: 31,
+                                  color: AppUIColor.lightbackgroundColor,
+                                  size: 31,
                                 ),
                               ),
                             ],
@@ -265,66 +270,74 @@ class _ProfilePageState extends State<ProfilePage> {
                   SizedBox(
                     height: 22,
                   ),
-                  Container(
-                      width: MediaQuery.of(context).size.width * 0.88,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(FontAwesomeIcons.userLock),
-                              SizedBox(
-                                width: 13,
-                              ),
-                              Container(
-                                width: 250,
-                                child: AutoSizeText(
-                                  "CHANGE PASSWORD",
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 22,
-                                      color: AppUIColor.lightTextColor),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PasswordChangePage()));
+                    },
+                    child: Container(
+                        width: MediaQuery.of(context).size.width * 0.88,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(FontAwesomeIcons.userLock),
+                                SizedBox(
+                                  width: 13,
                                 ),
-                              ),
-                            ],
-                          ),
-                          Icon(
-                            FontAwesomeIcons.arrowRight,
-                            size: 22,
-                          )
-                        ],
-                      )),
-                  SizedBox(
-                    height: 31,
+                                Container(
+                                  width: 250,
+                                  child: AutoSizeText(
+                                    "CHANGE PASSWORD",
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 22,
+                                        color: AppUIColor.lightTextColor),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Icon(
+                              FontAwesomeIcons.arrowRight,
+                              size: 22,
+                            )
+                          ],
+                        )),
                   ),
-                  Container(
-                      width: MediaQuery.of(context).size.width * 0.88,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(FontAwesomeIcons.user),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Text(
-                                "ABOUT US",
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 22,
-                                    color: AppUIColor.lightTextColor),
-                              ),
-                            ],
-                          ),
-                          Icon(
-                            FontAwesomeIcons.arrowRight,
-                            size: 22,
-                          )
-                        ],
-                      )),
+                  // SizedBox(
+                  //   height: 31,
+                  // ),
+                  // Container(
+                  //     width: MediaQuery.of(context).size.width * 0.88,
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //       children: [
+                  //         Row(
+                  //           children: [
+                  //             Icon(FontAwesomeIcons.user),
+                  //             SizedBox(
+                  //               width: 8,
+                  //             ),
+                  //             Text(
+                  //               "ABOUT US",
+                  //               style: GoogleFonts.poppins(
+                  //                   fontWeight: FontWeight.w500,
+                  //                   fontSize: 22,
+                  //                   color: AppUIColor.lightTextColor),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //         Icon(
+                  //           FontAwesomeIcons.arrowRight,
+                  //           size: 22,
+                  //         )
+                  //       ],
+                  //     )),
                   SizedBox(
                     height: 31,
                   ),

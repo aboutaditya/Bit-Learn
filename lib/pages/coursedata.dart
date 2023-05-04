@@ -107,7 +107,7 @@ class CourseData extends StatelessWidget {
                                       image: documents[index]['image'],
                                       link: documents[index]['link'],
                                       title: documents[index]['title'],
-                                      language: 'Python',
+                                      language: langName,
                                       sno: documents[index]['sno']);
                                 });
                           },

@@ -24,25 +24,27 @@ class _PasswordChangePageState extends State<PasswordChangePage> {
             Container(
               height: MediaQuery.of(context).size.height / 8,
               width: double.infinity,
-              color: Color(0xFF624aa1),
-              child: Container(
-                  child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Icon(
-                        FontAwesomeIcons.arrowLeftLong,
-                        color: Colors.white,
-                        size: 26,
+              color: AppUIColor.appLightColor,
+              child: Container(height:  MediaQuery.of(context).size.height / 8,width: double.infinity,
+                  child: SafeArea(
+                    child: Padding(
+                      padding:  EdgeInsets.only(left: MediaQuery.of(context).size.width/15),
+                      child: Row(crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Icon(
+                              FontAwesomeIcons.arrowLeftLong,
+                              color: Colors.white,
+                              size: 26,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              )),
+                  )),
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height / 10,

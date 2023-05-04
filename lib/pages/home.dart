@@ -6,6 +6,7 @@ import 'package:bitbybit/pages/drawerpage.dart';
 import 'package:bitbybit/pages/mycourses.dart';
 import 'package:bitbybit/pages/profile.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -77,6 +78,10 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Stream<QuerySnapshot> getDataStream() {
+      return FirebaseFirestore.instance.collection('Languages').orderBy('rank').snapshots();
+    }
+
     var fullName =
         FirebaseAuth.instance.currentUser!.displayName!.split(' ')[0];
     final GlobalKey<ScaffoldState> _key = GlobalKey();
@@ -244,25 +249,52 @@ class HomePage extends StatelessWidget {
               SizedBox(
                 height: 35,
               ),
-              Column(
-                children: [
-                  coursedata(
-                    langName: 'Python',
-                    langIcon: FontAwesomeIcons.python,
-                    enrollNo: '500+ enrolled',
-                  ),
-                  coursedata(
-                    langName: 'Java',
-                    langIcon: FontAwesomeIcons.java,
-                    enrollNo: '500+ enrolled',
-                  ),
-                  coursedata(
-                    langName: 'JavaScript',
-                    langIcon: FontAwesomeIcons.js,
-                    enrollNo: '500+ enrolled',
-                  )
-                ],
-              )
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    StreamBuilder(
+                      stream: getDataStream(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        List<DocumentSnapshot> documents = snapshot.data!.docs;
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: documents.length,
+                            itemBuilder: (context, index) {
+                              return coursedata(
+                                  enrollNo: documents[index]['enroll'],
+                                  langIcon: documents[index]['image'],
+                                  langName: documents[index]['name']);
+                            });
+                      },
+                    ),
+                    SizedBox(height: 50,)
+                  ],
+                ),
+              ),
+              // Column(
+              //   children: [
+              //     coursedata(
+              //       langName: 'Python',
+              //       langIcon: "FontAwesomeIcons.python",
+              //       enrollNo: '500+ enrolled',
+              //     ),
+              //     coursedata(
+              //       langName: 'Java',
+              //       langIcon: "FontAwesomeIcons.java",
+              //       enrollNo: '500+ enrolled',
+              //     ),
+              //     coursedata(
+              //       langName: 'JavaScript',
+              //       langIcon: "FontAwesomeIcons.js",
+              //       enrollNo: '500+ enrolled',
+              //     )
+              //   ],
+              // )
             ],
           ),
         ),
@@ -277,13 +309,13 @@ class coursedata extends StatelessWidget {
       required this.enrollNo,
       required this.langIcon,
       required this.langName});
-  IconData langIcon;
+  String langIcon;
   String langName, enrollNo;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 22),
+      padding: const EdgeInsets.only(bottom: 22,left: 17,right: 17),
       child: GestureDetector(
         onTap: () {
           Navigator.push(
@@ -303,46 +335,45 @@ class coursedata extends StatelessWidget {
                     borderRadius: BorderRadius.circular(19),
                     border: Border.all(color: Colors.black)),
                 child: Padding(
-                  padding: const EdgeInsets.all(22.0),
-                  child: Icon(
-                    langIcon,
-                    size: MediaQuery.of(context).size.width / 9,
-                    color: AppUIColor.appLightColor,
-                  ),
-                ),
+                    padding: const EdgeInsets.all(22.0),
+                    child: Image.network(langIcon,height: MediaQuery.of(context).size.height/15,width: MediaQuery.of(context).size.width/8,)),
               ),
               // SizedBox(width: 31,),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    langName,
-                    style: GoogleFonts.poppins(
-                        color: AppUIColor.lightTextColor,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 26),
-                  ),
-                  SizedBox(
-                    height: 13,
-                  ),
-                  Row(
+              Container(width: MediaQuery.of(context).size.width/3,
+                child: FittedBox(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Icon(
-                        FontAwesomeIcons.userGroup,
-                        color: AppUIColor.appLightColor,
+                      Text(
+                        langName,
+                        style: GoogleFonts.poppins(
+                            color: AppUIColor.lightTextColor,
+                            fontWeight: FontWeight.w800,
+                            fontSize: 26),
                       ),
                       SizedBox(
-                        width: 17,
+                        height: 13,
                       ),
-                      Text(
-                        enrollNo,
-                        style: GoogleFonts.poppins(
-                            color: AppUIColor.appLightColor, fontSize: 17),
-                      ),
+                      Row(
+                        children: [
+                          Icon(
+                            FontAwesomeIcons.userGroup,
+                            color: AppUIColor.appLightColor,
+                          ),
+                          SizedBox(
+                            width: 17,
+                          ),
+                          Text(
+                            enrollNo+' ENROLLED',
+                            style: GoogleFonts.poppins(
+                                color: AppUIColor.appLightColor, fontSize: 17),
+                          ),
+                        ],
+                      )
                     ],
-                  )
-                ],
+                  ),
+                ),
               ),
               GestureDetector(
                 onTap: () {
