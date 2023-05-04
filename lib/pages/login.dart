@@ -78,7 +78,8 @@ class _LoginPageState extends State<LoginPage> {
                   child: Center(
                     child: Container(
                         width: MediaQuery.of(context).size.width * 0.8,
-                        child: TextField(controller: email,
+                        child: TextField(
+                          controller: email,
                           style: GoogleFonts.lato(
                               color: Colors.black,
                               fontSize: 18,
@@ -119,7 +120,8 @@ class _LoginPageState extends State<LoginPage> {
                   child: Center(
                     child: Container(
                         width: MediaQuery.of(context).size.width * 0.8,
-                        child: TextField(controller: password,
+                        child: TextField(
+                          controller: password,
                           obscureText: true,
                           style: GoogleFonts.lato(
                               color: Colors.black,
@@ -215,19 +217,22 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-void login(String emailAddress, String password , context)async {
+
+void login(String emailAddress, String password, context) async {
   try {
-  final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-    email: emailAddress,
-    password: password
-  );
-  Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomePage()));
-} on FirebaseAuthException catch (e) {
-  if (e.code == 'user-not-found') {
-    print('No user found for that email.');
-  } else if (e.code == 'wrong-password') {
-    print('Wrong password provided for that user.');
+    final credential = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: emailAddress, password: password);
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => HomePage()));
+  } on FirebaseAuthException catch (e) {
+    if (e.code == 'user-not-found') {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('No user found for that email')));
+      print('No user found for that email.');
+    } else if (e.code == 'wrong-password') {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Wrong password provided for that user.')));
+      print('Wrong password provided for that user.');
+    }
   }
-}
 }

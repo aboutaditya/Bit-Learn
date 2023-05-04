@@ -72,7 +72,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     child: Center(
                       child: Container(
                           width: MediaQuery.of(context).size.width * 0.75,
-                          child: TextField(controller: name,
+                          child: TextField(
+                            controller: name,
                             style: GoogleFonts.lato(
                                 color: Colors.black,
                                 fontSize: 18,
@@ -218,11 +219,9 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      if(password.text==passwordconfirm.text){
-                        signup( email.text
-                        , password.text,name.text, context);
-                      }
-                      else{
+                      if (password.text == passwordconfirm.text) {
+                        signup(email.text, password.text, name.text, context);
+                      } else {
                         print("mismacth");
                       }
                     },
@@ -281,21 +280,29 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 }
-void signup(String emailAddress, String password,String name , context)async{
+
+void signup(String emailAddress, String password, String name, context) async {
   try {
-  final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-    email: emailAddress,
-    password: password,
-  );
-  final updatename = await FirebaseAuth.instance.currentUser!.updateDisplayName(name);
-  Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
-} on FirebaseAuthException catch (e) {
-  if (e.code == 'weak-password') {
-    print('The password provided is too weak.');
-  } else if (e.code == 'email-already-in-use') {
-    print('The account already exists for that email.');
+    final credential =
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: emailAddress,
+      password: password,
+    );
+    final updatename =
+        await FirebaseAuth.instance.currentUser!.updateDisplayName(name);
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => HomePage()));
+  } on FirebaseAuthException catch (e) {
+    if (e.code == 'weak-password') {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('The password provided is too weak.')));
+      print('The password provided is too weak.');
+    } else if (e.code == 'email-already-in-use') {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('The account already exists for that email.')));
+      print('The account already exists for that email.');
+    }
+  } catch (e) {
+    print(e);
   }
-} catch (e) {
-  print(e);
-}
 }
